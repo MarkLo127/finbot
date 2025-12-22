@@ -1,0 +1,665 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+  /* 8-bit 配色 */
+  --color-bg: #0f0f1a;
+  --color-surface: #1a1a2e;
+  --color-surface-light: #252542;
+  --color-primary: #00d9ff;
+  --color-secondary: #ff6b9d;
+  --color-accent: #c0ff00;
+  --color-warning: #ffd93d;
+  --color-danger: #ff6b6b;
+  --color-success: #6bff6b;
+  --color-text: #e8e8e8;
+  --color-text-muted: #888;
+  --color-border: #3a3a5a;
+  
+  /* 間距 */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  
+  /* 像素邊框 */
+  --pixel-size: 3px;
+  --pixel-border: var(--pixel-size) solid var(--color-border);
+  --pixel-shadow: 
+    var(--pixel-size) 0 0 0 var(--color-border),
+    calc(-1 * var(--pixel-size)) 0 0 0 var(--color-border),
+    0 var(--pixel-size) 0 0 var(--color-border),
+    0 calc(-1 * var(--pixel-size)) 0 0 var(--color-border);
+  
+  /* 響應式字體 */
+  --font-xs: 8px;
+  --font-sm: 10px;
+  --font-md: 12px;
+  --font-lg: 14px;
+  --font-xl: 18px;
+}
+
+/* 手機適配 */
+@media (max-width: 768px) {
+  :root {
+    --pixel-size: 2px;
+    --font-xs: 7px;
+    --font-sm: 8px;
+    --font-md: 10px;
+    --font-lg: 12px;
+    --font-xl: 14px;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Press Start 2P', monospace;
+  font-size: var(--font-sm);
+  line-height: 1.8;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh; /* 動態視窗高度，適用於手機 */
+}
+
+/* ========================================
+   導航列
+   ======================================== */
+.navbar {
+  background: var(--color-surface);
+  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: var(--pixel-size) solid var(--color-border);
+  flex-shrink: 0;
+  z-index: 100;
+}
+
+.navbar-brand {
+  font-size: var(--font-lg);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.navbar-links {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.navbar-links a {
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: var(--font-xs);
+  padding: var(--space-sm) var(--space-sm);
+  transition: all 0.2s;
+  border-radius: 0;
+}
+
+.navbar-links a:hover,
+.navbar-links a.active {
+  color: var(--color-primary);
+  background: rgba(0, 217, 255, 0.1);
+}
+
+@media (max-width: 480px) {
+  .navbar-brand span {
+    display: none;
+  }
+  .navbar-links a {
+    padding: var(--space-xs);
+    font-size: var(--font-xs);
+  }
+}
+
+/* ========================================
+   主內容區域
+   ======================================== */
+main {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--space-md);
+}
+
+@media (max-width: 768px) {
+  main {
+    padding: var(--space-sm);
+  }
+}
+
+/* ========================================
+   按鈕
+   ======================================== */
+.btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: var(--font-xs);
+  padding: var(--space-sm) var(--space-md);
+  border: none;
+  cursor: pointer;
+  background: var(--color-primary);
+  color: var(--color-bg);
+  box-shadow: var(--pixel-shadow);
+  transition: all 0.1s;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  transform: translate(-2px, -2px);
+  filter: brightness(1.1);
+}
+
+.btn:active {
+  transform: translate(1px, 1px);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-secondary { background: var(--color-secondary); }
+.btn-accent { background: var(--color-accent); }
+.btn-danger { background: var(--color-danger); }
+.btn-sm {
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--font-xs);
+}
+
+/* ========================================
+   卡片
+   ======================================== */
+.card {
+  background: var(--color-surface);
+  box-shadow: var(--pixel-shadow);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+}
+
+.card-header {
+  border-bottom: 2px dashed var(--color-border);
+  padding-bottom: var(--space-sm);
+  margin-bottom: var(--space-md);
+  color: var(--color-primary);
+  font-size: var(--font-md);
+}
+
+/* ========================================
+   輸入框
+   ======================================== */
+.input {
+  font-family: 'Press Start 2P', monospace;
+  font-size: var(--font-xs);
+  padding: var(--space-sm) var(--space-md);
+  border: none;
+  background: var(--color-bg);
+  color: var(--color-text);
+  box-shadow: var(--pixel-shadow);
+  width: 100%;
+  outline: none;
+}
+
+.input:focus {
+  box-shadow: 
+    var(--pixel-size) 0 0 0 var(--color-primary),
+    calc(-1 * var(--pixel-size)) 0 0 0 var(--color-primary),
+    0 var(--pixel-size) 0 0 var(--color-primary),
+    0 calc(-1 * var(--pixel-size)) 0 0 var(--color-primary);
+}
+
+.input::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* ========================================
+   進度條
+   ======================================== */
+.progress-bar {
+  height: 16px;
+  background: var(--color-bg);
+  box-shadow: var(--pixel-shadow);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--color-primary);
+  transition: width 0.3s steps(10);
+}
+
+.progress-fill.warning { background: var(--color-warning); }
+.progress-fill.danger { background: var(--color-danger); }
+.progress-fill.success { background: var(--color-success); }
+
+/* ========================================
+   聊天介面
+   ======================================== */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px);
+  height: calc(100dvh - 60px);
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-md);
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 1200px) {
+  .chat-messages {
+    padding: var(--space-lg) 15%;
+  }
+}
+
+.message {
+  margin: var(--space-md) 0;
+  max-width: 75%;
+  animation: pixel-fade-in 0.2s ease-out;
+}
+
+@media (max-width: 768px) {
+  .message {
+    max-width: 90%;
+  }
+}
+
+.message.user {
+  margin-left: auto;
+}
+
+.message-bubble {
+  padding: var(--space-sm) var(--space-md);
+  box-shadow: var(--pixel-shadow);
+  word-break: break-word;
+}
+
+.message.user .message-bubble {
+  background: var(--color-primary);
+  color: var(--color-bg);
+}
+
+.message.bot .message-bubble {
+  background: var(--color-surface-light);
+}
+
+.message-time {
+  font-size: var(--font-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-xs);
+  text-align: right;
+}
+
+.message.bot .message-time {
+  text-align: left;
+}
+
+/* 聊天輸入區 */
+.chat-input-container {
+  display: flex;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  margin-bottom: var(--space-xl);
+  border-top: 2px dashed var(--color-border);
+  flex-shrink: 0;
+  background: var(--color-surface);
+}
+
+@media (min-width: 1200px) {
+  .chat-input-container {
+    padding: var(--space-md) 15%;
+  }
+}
+
+.chat-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.voice-btn {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.voice-btn.recording {
+  background: var(--color-danger);
+  animation: pulse 0.5s infinite;
+}
+
+@media (max-width: 480px) {
+  .chat-input-container {
+    padding: var(--space-sm) 0;
+  }
+  .voice-btn {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* ========================================
+   統計卡片
+   ======================================== */
+.stat-card {
+  text-align: center;
+  padding: var(--space-md);
+}
+
+.stat-icon {
+  font-size: 28px;
+  margin-bottom: var(--space-sm);
+}
+
+.stat-value {
+  font-size: var(--font-lg);
+  color: var(--color-primary);
+  margin-bottom: var(--space-xs);
+}
+
+.stat-label {
+  font-size: var(--font-xs);
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 768px) {
+  .stat-card {
+    padding: var(--space-sm);
+  }
+  .stat-icon {
+    font-size: 24px;
+  }
+}
+
+/* ========================================
+   響應式網格
+   ======================================== */
+.grid {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 1024px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .grid-2, .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid { gap: var(--space-sm); }
+}
+
+@media (max-width: 480px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+}
+
+/* ========================================
+   表格（響應式）
+   ======================================== */
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 500px;
+}
+
+.table th, .table td {
+  padding: var(--space-sm);
+  text-align: left;
+  font-size: var(--font-xs);
+  white-space: nowrap;
+}
+
+.table th {
+  background: var(--color-primary);
+  color: var(--color-bg);
+  position: sticky;
+  top: 0;
+}
+
+.table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* ========================================
+   Badge
+   ======================================== */
+.badge {
+  display: inline-block;
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--font-xs);
+  box-shadow: 
+    2px 0 0 0 var(--color-border),
+    -2px 0 0 0 var(--color-border),
+    0 2px 0 0 var(--color-border),
+    0 -2px 0 0 var(--color-border);
+}
+
+.badge-primary { background: var(--color-primary); color: var(--color-bg); }
+.badge-success { background: var(--color-success); color: var(--color-bg); }
+.badge-warning { background: var(--color-warning); color: var(--color-bg); }
+.badge-danger { background: var(--color-danger); color: var(--color-bg); }
+
+/* ========================================
+   狀態文字
+   ======================================== */
+.text-success { color: var(--color-success); }
+.text-warning { color: var(--color-warning); }
+.text-danger { color: var(--color-danger); }
+.text-muted { color: var(--color-text-muted); }
+
+/* ========================================
+   空狀態 & 載入
+   ======================================== */
+.empty-state {
+  text-align: center;
+  padding: var(--space-xl);
+  color: var(--color-text-muted);
+}
+
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-xl);
+}
+
+.loading {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: var(--color-primary);
+  animation: loading 0.4s steps(4) infinite;
+}
+
+@keyframes loading {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ========================================
+   動畫
+   ======================================== */
+@keyframes pixel-fade-in {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* ========================================
+   頁面標題
+   ======================================== */
+.page-title {
+  font-size: var(--font-lg);
+  color: var(--color-primary);
+  margin-bottom: var(--space-md);
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+/* ========================================
+   表單
+   ======================================== */
+.form-group {
+  margin-bottom: var(--space-md);
+}
+
+.form-group label {
+  display: block;
+  font-size: var(--font-xs);
+  margin-bottom: var(--space-sm);
+  color: var(--color-text-muted);
+}
+
+.form-row {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.form-row > * {
+  flex: 1;
+  min-width: 120px;
+}
+
+@media (max-width: 480px) {
+  .form-row > * {
+    flex: 100%;
+  }
+}
+
+/* ========================================
+   篩選器
+   ======================================== */
+.filters {
+  margin-bottom: var(--space-md);
+}
+
+.filter-row {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.filter-row .input,
+.filter-row .btn {
+  flex: 1;
+  min-width: 100px;
+}
+
+@media (max-width: 480px) {
+  .filter-row .input,
+  .filter-row .btn {
+    flex: 100%;
+  }
+}
+
+/* ========================================
+   CRT 掃描線效果（可選）
+   ======================================== */
+.crt-effect::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.05) 0px,
+    rgba(0, 0, 0, 0.05) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ========================================
+   滾動條樣式
+   ======================================== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+/* ========================================
+   安全區域（iPhone 瀏海等）
+   ======================================== */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .chat-input-container {
+    padding-bottom: calc(var(--space-md) + env(safe-area-inset-bottom));
+  }
+  
+  .navbar {
+    padding-top: calc(var(--space-sm) + env(safe-area-inset-top));
+  }
+}
